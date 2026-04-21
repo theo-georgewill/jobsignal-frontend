@@ -3,15 +3,18 @@ import globals from "globals";
 
 export default [
   js.configs.recommended,
+
   {
-    files: ["**/*.{js,jsx,ts,tsx}"],
+    files: ["src/**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
       globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module"
-      }
     },
-    rules: {}
-  }
+  },
+
+  {
+    files: ["vite.config.ts"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ];
