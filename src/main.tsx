@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './css/globals.css'
 import App from './App.tsx'
-import Spinner from './views/spinner/Spinner.tsx'
+import Spinner from './pages/spinner/Spinner.tsx'
 
 
 createRoot(document.getElementById('root')!).render(

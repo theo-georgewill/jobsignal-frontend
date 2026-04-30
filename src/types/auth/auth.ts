@@ -13,3 +13,4 @@ export interface loginType {
 export interface signInType {
   title?: string;
 }
+
