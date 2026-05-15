@@ -1,7 +1,5 @@
 // src/components/company/CompanyStats.tsx
 
-import React from 'react';
-
 type Props = {
   total: number;
   active: number;

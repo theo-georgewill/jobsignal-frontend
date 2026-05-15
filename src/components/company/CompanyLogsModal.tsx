@@ -1,7 +1,5 @@
 // src/components/company/CompanyLogsModal.tsx
 
-import React from 'react';
-
 type LogLevel =
   | 'healthy'
   | 'warning'
