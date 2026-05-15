@@ -160,7 +160,8 @@ export default function IngestionPage() {
               ? 'orange'
               : 'gray'
           }
-          icon={<Activity size={18} />}
+          icon={<Activity size={30} />}
+          iconPosition="center-right"
           compact
         />
 
@@ -169,7 +170,8 @@ export default function IngestionPage() {
           value={total}
           description={`${healthy} healthy • ${unhealthy} issues`}
           tone="purple"
-          icon={<Database size={18} />}
+          icon={<Database size={30} />}
+          iconPosition="center-right"
           compact
         />
 
@@ -196,8 +198,9 @@ export default function IngestionPage() {
           }% operational`}
           tone="green"
           icon={
-            <CheckCircle2 size={18} />
+            <CheckCircle2 size={30} />
           }
+          iconPosition="center-right"
           compact
         />
       </div>
@@ -213,6 +216,7 @@ export default function IngestionPage() {
 
       {/* Full Width Source Scheduling */}
       <SourceScheduling
+        sources={sources}
         onRefresh={loadData}
       />
     </div>

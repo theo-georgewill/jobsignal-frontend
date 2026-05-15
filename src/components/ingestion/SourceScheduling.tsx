@@ -4,7 +4,6 @@ import {
 } from 'react';
 
 import {
-  MoreHorizontal,
   ChevronRight,
   Play,
   Pause,
@@ -44,7 +43,6 @@ export default function SourceScheduling({
     async () => {
       try {
         setLoading(true);
-
         const data =
           await getSources();
 

@@ -14,7 +14,7 @@ import {
   Pencil,
   Trash2,
   Globe,
-  Building2,
+  //Building2,
   Activity,
   Clock3,
   History,
@@ -529,7 +529,7 @@ export default function CompanyDetailsPage() {
                   />
 
                   <InfoRow
-                    label="ATS"
+                    label="ATyes S"
                     value={
                       company.atsType
                     }

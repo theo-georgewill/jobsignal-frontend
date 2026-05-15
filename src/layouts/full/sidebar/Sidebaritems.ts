@@ -43,6 +43,12 @@ const SidebarContent: MenuItem[] = [
         id: uniqueId(),
         url: "/applications",
       },
+      {
+        name: "Opportunities",
+        icon: "solar:widget-add-line-duotone",
+        id: uniqueId(),
+        url: "/opportunities",
+      },
     ],
   },
   {

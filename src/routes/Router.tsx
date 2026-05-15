@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { lazy } from 'react';
-import { Navigate, createBrowserRouter } from 'react-router';
+import { createBrowserRouter } from 'react-router';
 import Loadable from 'src/layouts/full/shared/loadable/Loadable';
 import JobsPage from '@/pages/jobs/JobsPage';
 import ApplicationsPage from '@/pages/applications/ApplicationsPage';
@@ -37,6 +37,10 @@ const IngestionSettings = Loadable(
   lazy(() => import('../pages/ingestion/SettingsPage'))
 );
 
+const OpportunitiesPage = Loadable(
+  lazy(() => import('../pages/opportunities/OpportunitiesPage'))
+);
+
 // utilities
 const Typography = Loadable(lazy(() => import('../pages/typography/Typography')));
 const Table = Loadable(lazy(() => import('../pages/tables/Table')));
@@ -64,6 +68,7 @@ const Router = [
       { path: '/', exact: true, element: <Dashboard /> },
       { path: '/jobs', element: <JobsPage /> },
       { path: '/applications', element: <ApplicationsPage /> },
+      { path: '/opportunities', element: <OpportunitiesPage /> },
       { path: '/ui/typography', exact: true, element: <Typography /> },
       { path: '/ui/table', exact: true, element: <Table /> },
       { path: '/ui/form', exact: true, element: <Form /> },

@@ -4,8 +4,7 @@ import {
   Clock3,
   Moon,
   Globe,
-  Info,
-  ChevronDown,
+  Info
 } from 'lucide-react';
 
 export default function SchedulingOverview() {
@@ -26,6 +25,25 @@ export default function SchedulingOverview() {
     useState(
       'Asia/Kuala_Lumpur'
     );
+const intervals = [
+  'Every 5 minutes',
+  'Every 15 minutes',
+  'Every 30 minutes',
+  'Hourly',
+];
+
+const quietHourOptions = [
+  'None',
+  '12:00 AM - 6:00 AM',
+  '11:00 PM - 5:00 AM',
+];
+
+const timezoneOptions = [
+  'Asia/Kuala_Lumpur',
+  'Africa/Lagos',
+  'UTC',
+];
+
 
   const rowIcon =
     'h-9 w-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0';
@@ -101,11 +119,22 @@ export default function SchedulingOverview() {
                 </p>
               </div>
             </div>
-
-            <button className="h-10 px-4 rounded-xl border border-gray-200 bg-white text-sm text-slate-700 flex items-center gap-2">
-              {interval}
-              <ChevronDown size={16} />
-            </button>
+            <select
+              value={interval}
+              onChange={(e) =>
+                setInterval(e.target.value)
+              }
+              className="h-10 px-4 rounded-xl border border-gray-200 bg-white text-sm text-slate-700"
+            >
+              {intervals.map((item) => (
+                <option
+                  key={item}
+                  value={item}
+                >
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Quiet Hours */}
@@ -125,10 +154,26 @@ export default function SchedulingOverview() {
               </div>
             </div>
 
-            <button className="text-sm text-slate-700 flex items-center gap-2">
-              {quietHours}
-              <ChevronDown size={16} />
-            </button>
+            <select
+              value={quietHours}
+              onChange={(e) =>
+                setQuietHours(
+                  e.target.value
+                )
+              }
+              className="h-10 px-4 rounded-xl border border-gray-200 bg-white text-sm text-slate-700"
+            >
+              {quietHourOptions.map(
+                (item) => (
+                  <option
+                    key={item}
+                    value={item}
+                  >
+                    {item}
+                  </option>
+                )
+              )}
+            </select>
           </div>
 
           {/* Timezone */}
@@ -148,10 +193,26 @@ export default function SchedulingOverview() {
               </div>
             </div>
 
-            <button className="text-sm text-slate-700 flex items-center gap-2">
-              {timezone}
-              <ChevronDown size={16} />
-            </button>
+            <select
+              value={timezone}
+              onChange={(e) =>
+                setTimezone(
+                  e.target.value
+                )
+              }
+              className="h-10 px-4 rounded-xl border border-gray-200 bg-white text-sm text-slate-700"
+            >
+              {timezoneOptions.map(
+                (item) => (
+                  <option
+                    key={item}
+                    value={item}
+                  >
+                    {item}
+                  </option>
+                )
+              )}
+            </select>
           </div>
         </div>
 
