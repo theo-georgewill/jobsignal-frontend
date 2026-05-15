@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import axios from 'axios';
 import StatusBadge from '@/components/ingestion/StatusBadge';
 import StatsCard from '@/components/ingestion/StatsCard';
 
@@ -38,13 +38,21 @@ export default function LogsPage() {
             await getLogs();
 
           setLogs(data);
-        } catch (err: any) {
-          setError(
-            err?.response?.data
-              ?.message ||
-              err?.message ||
+        } catch (err: unknown) {
+          if (axios.isAxiosError(err)) {
+            setError(
+              err.response?.data
+                ?.message ||
+                err.message ||
+                'Failed to load logs'
+            );
+          } else if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError(
               'Failed to load logs'
-          );
+            );
+          }
         } finally {
           setLoading(false);
         }

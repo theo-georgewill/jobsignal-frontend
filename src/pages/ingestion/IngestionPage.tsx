@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Activity,
   CheckCircle2,
@@ -54,14 +55,22 @@ export default function IngestionPage() {
         setSources(
           sourcesData
         );
-      } catch (err: any) {
-        setError(
-          err?.response?.data
-            ?.message ||
-            err?.message ||
-            'Failed to load ingestion data'
-        );
-      } finally {
+      } catch (err: unknown) {
+          if (axios.isAxiosError(err)) {
+            setError(
+              err.response?.data
+                ?.message ||
+                err.message ||
+                'Failed to load ingestion data'
+            );
+          } else if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError(
+              'Failed to load ingestion data'
+            );
+          }
+        } finally {
         setLoading(false);
       }
     };
@@ -106,12 +115,6 @@ export default function IngestionPage() {
       total - healthy,
       0
     );
-
-  const nextRun =
-    running &&
-    !paused
-      ? 'In progress'
-      : 'In 15 mins';
 
   return (
     <div className="p-6 space-y-6">

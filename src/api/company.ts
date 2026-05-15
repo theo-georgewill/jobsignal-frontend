@@ -63,6 +63,9 @@ export type RunCompanyResponse = {
   saved?: number;
 };
 
+export type BulkImportCompanyRow =
+  CreateCompanyInput;
+
 /* =========================================
    COMPANIES
 ========================================= */
@@ -156,7 +159,7 @@ export async function getCompanyLogs(
 }
 
 export async function bulkImportCompanies(
-  rows: any[]
+  rows: BulkImportCompanyRow[]
 ) {
   const res =
     await apiClient.post(

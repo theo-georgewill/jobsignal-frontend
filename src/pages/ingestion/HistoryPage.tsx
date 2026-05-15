@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import StatsCard from '@/components/ingestion/StatsCard';
 import RunHistoryTable from '@/components/ingestion/RunHistoryTable';
@@ -28,13 +29,21 @@ export default function HistoryPage() {
             await getHistory();
 
           setRuns(data);
-        } catch (err: any) {
-          setError(
-            err?.response?.data
-              ?.message ||
-              err?.message ||
+        } catch (err: unknown) {
+          if (axios.isAxiosError(err)) {
+            setError(
+              err.response?.data
+                ?.message ||
+                err.message ||
+                'Failed to load history'
+            );
+          } else if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError(
               'Failed to load history'
-          );
+            );
+          }
         } finally {
           setLoading(false);
         }

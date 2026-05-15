@@ -1,5 +1,5 @@
-import React from "react";
-
+//import React from "react";
+/*
 type Status =
   | "running"
   | "healthy"
@@ -7,6 +7,7 @@ type Status =
   | "failed"
   | "paused"
   | "completed";
+*/
 
 type Variant = "status" | "priority" | "momentum";
 

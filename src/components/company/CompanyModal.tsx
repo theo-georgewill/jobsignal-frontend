@@ -86,9 +86,11 @@ export default function CompanyModal({
     }
   }, [company, open]);
 
-  function updateField(
-    key: keyof Company,
-    value: any
+  function updateField<
+    K extends keyof Company
+  >(
+    key: K,
+    value: Company[K]
   ) {
     setForm((prev) => ({
       ...prev,

@@ -1,6 +1,7 @@
 // src/views/auth/authforms/AuthRegister.tsx
 
 import { useState } from 'react';
+import axios from 'axios';
 import {
   Button,
   Label,
@@ -65,13 +66,19 @@ const AuthRegister = () => {
       await hydrateUser();
 
       navigate('/');
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          'Registration failed'
-      );
-    } finally {
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(
+          err.response?.data?.message ||
+          err.message ||
+          'Request failed'
+        );
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
+    }finally {
       setLoading(false);
     }
   };

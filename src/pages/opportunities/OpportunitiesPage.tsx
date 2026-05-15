@@ -11,13 +11,7 @@ export default function OpportunitiesPage() {
     async function load() {
       try {
         const res = await getOpportunities();
-
-        // 🔥 Safety guard (prevents map crash)
-        const safeData = Array.isArray(res)
-          ? res
-          : (res as any)?.data || [];
-
-        setData(safeData);
+        setData(res);
       } catch (err) {
         console.error("Failed to load opportunities:", err);
         setData([]);

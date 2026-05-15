@@ -1,22 +1,21 @@
 export interface ChildItem {
   id?: number | string;
   name?: string;
-  icon?: any;
+  icon?: string;
   children?: ChildItem[];
-  item?: any;
-  url?: any;
+  url?: string;
   color?: string;
 }
 
 export interface MenuItem {
   heading?: string;
   name?: string;
-  icon?: any;
-  id?: number;
+  icon?: string;
+  id?: number | string;
   to?: string;
   items?: MenuItem[];
   children?: ChildItem[];
-  url?: any;
+  url?: string;
 }
 
 import { uniqueId } from "lodash";

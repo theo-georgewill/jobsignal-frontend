@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import SourcesTable from '@/components/ingestion/SourcesTable';
 
@@ -28,14 +29,22 @@ export default function SourcesPage() {
           await getSources();
 
         setSources(data);
-      } catch (err: any) {
-        setError(
-          err?.response?.data
-            ?.message ||
-            err?.message ||
-            'Failed to load sources'
-        );
-      } finally {
+      } catch (err: unknown) {
+          if (axios.isAxiosError(err)) {
+            setError(
+              err.response?.data
+                ?.message ||
+                err.message ||
+                'Failed to load history'
+            );
+          } else if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError(
+              'Failed to load history'
+            );
+          }
+        } finally {
         setLoading(false);
       }
     };

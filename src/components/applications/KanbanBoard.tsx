@@ -2,6 +2,24 @@ import { useState } from "react";
 import { Kanban } from "react-kanban-kit";
 import type { BoardData } from "react-kanban-kit";
 
+type JobCardContent = {
+  role: string;
+  location: string;
+};
+
+type JobCardData = {
+  id: string;
+  title: string;
+  content?: JobCardContent;
+};
+
+type CardMovePayload = {
+  cardId: string;
+  fromColumnId: string;
+  toColumnId: string;
+  position: number;
+};
+
 const initialBoard: BoardData = {
   root: {
     id: "root",
@@ -90,18 +108,18 @@ const initialBoard: BoardData = {
 
 const configMap = {
   job: {
-    render: ({ data }: any) => (
+    render: ({ data }: { data: JobCardData }) => (
       <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md transition">
         <h3 className="font-semibold text-slate-900">
           {data.title}
         </h3>
 
         <p className="mt-1 text-sm text-slate-600">
-          {data.content.role}
+          {data.content?.role}
         </p>
 
         <p className="mt-3 text-xs text-slate-500">
-          {data.content.location}
+          {data.content?.location}
         </p>
       </div>
     ),
@@ -117,7 +135,7 @@ export default function KanbanBoard() {
     fromColumnId,
     toColumnId,
     position,
-  }: any) => {
+  }: CardMovePayload) => {
     const next: BoardData = structuredClone(board);
 
     next[fromColumnId].children =

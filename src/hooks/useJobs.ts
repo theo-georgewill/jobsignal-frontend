@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
 import { fetchJobs } from '../api/jobs';
+import type { ApiJob } from '../api/jobs';
+
+type Job = {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  url: string;
+  tags: string[];
+};
 
 export function useJobs(search?: string, role?: string, page = 1 ) {
-  const [jobs, setJobs] = useState<any[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   
   const [meta, setMeta] = useState({
     total: 0,
@@ -17,7 +27,7 @@ export function useJobs(search?: string, role?: string, page = 1 ) {
 
     fetchJobs({ search, role, page })
       .then((res) => {
-        const normalizedJobs = res.data.map((job: any) => ({
+        const normalizedJobs = res.data.map((job: ApiJob) => ({
           id: job.id,
           title: job.title,
           company:

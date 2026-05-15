@@ -1,5 +1,4 @@
 import {
-  useEffect,
   useState,
 } from 'react';
 
@@ -12,25 +11,19 @@ import {
 } from 'lucide-react';
 
 import {
-  getSources,
   runSource,
   IngestionSource,
 } from '@/api/ingestion';
 
 interface Props {
+  sources: IngestionSource[];
   onRefresh?: () => void;
 }
 
 export default function SourceScheduling({
+  sources,
   onRefresh,
 }: Props) {
-  const [sources, setSources] =
-    useState<
-      IngestionSource[]
-    >([]);
-
-  const [loading, setLoading] =
-    useState(true);
 
   const [
     runningId,
@@ -39,22 +32,6 @@ export default function SourceScheduling({
     string | null
   >(null);
 
-  const loadSources =
-    async () => {
-      try {
-        setLoading(true);
-        const data =
-          await getSources();
-
-        setSources(data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-  useEffect(() => {
-    loadSources();
-  }, []);
 
   const handleRun =
     async (
@@ -70,9 +47,8 @@ export default function SourceScheduling({
           source.name
         );
 
-        await loadSources();
+        await onRefresh?.();
 
-        onRefresh?.();
       } finally {
         setRunningId(
           null
@@ -164,138 +140,130 @@ export default function SourceScheduling({
 
       {/* Content */}
       <div className="p-4">
-        {loading ? (
-          <div className="py-16 flex justify-center">
-            <Loader2 className="animate-spin text-blue-600" />
-          </div>
-        ) : (
-          <>
-            <div className="overflow-hidden rounded-2xl border border-gray-100">
-              {/* Header */}
-              <div className="grid grid-cols-12 px-5 py-3 text-xs font-medium text-slate-500 bg-slate-50 border-b border-gray-100">
-                <div className="col-span-4">
-                  Source
-                </div>
-                <div className="col-span-3">
-                  Schedule
-                </div>
-                <div className="col-span-2">
-                  Next Run
-                </div>
-                <div className="col-span-2">
-                  Status
-                </div>
-                <div className="col-span-1 text-right">
-                  Action
-                </div>
-              </div>
-
-              {/* Rows */}
-              {sources.map(
-                (
-                  source
-                ) => {
-                  const busy =
-                    runningId ===
-                    source.id;
-
-                  return (
-                    <div
-                      key={
-                        source.id
-                      }
-                      className="grid grid-cols-12 items-center px-5 py-4 border-b last:border-b-0 border-gray-100"
-                    >
-                      {/* Source */}
-                      <div className="col-span-4 flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                          <Globe size={15} />
-                        </div>
-
-                        <span className="text-sm font-medium text-slate-800">
-                          {
-                            source.name
-                          }
-                        </span>
-                      </div>
-
-                      {/* Schedule */}
-                      <div className="col-span-3">
-                        <span className="inline-flex px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
-                          {getSchedule(
-                            source.type
-                          )}
-                        </span>
-                      </div>
-
-                      {/* Next */}
-                      <div className="col-span-2 text-sm text-slate-600">
-                        {getNextRun(
-                          source
-                        )}
-                      </div>
-
-                      {/* Status */}
-                      <div className="col-span-2">
-                        <span
-                          className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium capitalize ${statusClass(
-                            source.status
-                          )}`}
-                        >
-                          {
-                            source.status
-                          }
-                        </span>
-                      </div>
-
-                      {/* Action */}
-                      <div className="col-span-1 flex justify-end">
-                        <button
-                          disabled={
-                            busy
-                          }
-                          onClick={() =>
-                            handleRun(
-                              source
-                            )
-                          }
-                          className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-slate-600 disabled:opacity-50"
-                        >
-                          {busy ? (
-                            <Loader2
-                              size={
-                                16
-                              }
-                              className="animate-spin"
-                            />
-                          ) : source.enabled ? (
-                            <Play
-                              size={
-                                16
-                              }
-                            />
-                          ) : (
-                            <Pause
-                              size={
-                                16
-                              }
-                            />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
+        <div className="overflow-hidden rounded-2xl border border-gray-100">
+          {/* Header */}
+          <div className="grid grid-cols-12 px-5 py-3 text-xs font-medium text-slate-500 bg-slate-50 border-b border-gray-100">
+            <div className="col-span-4">
+              Source
             </div>
+            <div className="col-span-3">
+              Schedule
+            </div>
+            <div className="col-span-2">
+              Next Run
+            </div>
+            <div className="col-span-2">
+              Status
+            </div>
+            <div className="col-span-1 text-right">
+              Action
+            </div>
+          </div>
 
-            {/* Footer */}
-            <button className="mt-4 text-sm text-blue-600 font-medium inline-flex items-center gap-1 hover:text-blue-700">
-              View all sources
-              <ChevronRight size={16} />
-            </button>
-          </>
-        )}
+          {/* Rows */}
+          {sources.map(
+            (
+              source
+            ) => {
+              const busy =
+                runningId ===
+                source.id;
+
+              return (
+                <div
+                  key={
+                    source.id
+                  }
+                  className="grid grid-cols-12 items-center px-5 py-4 border-b last:border-b-0 border-gray-100"
+                >
+                  {/* Source */}
+                  <div className="col-span-4 flex items-center gap-3">
+                    <div className="h-8 w-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                      <Globe size={15} />
+                    </div>
+
+                    <span className="text-sm font-medium text-slate-800">
+                      {
+                        source.name
+                      }
+                    </span>
+                  </div>
+
+                  {/* Schedule */}
+                  <div className="col-span-3">
+                    <span className="inline-flex px-2.5 py-1 rounded-lg bg-blue-50 text-blue-700 text-xs font-medium">
+                      {getSchedule(
+                        source.type
+                      )}
+                    </span>
+                  </div>
+
+                  {/* Next */}
+                  <div className="col-span-2 text-sm text-slate-600">
+                    {getNextRun(
+                      source
+                    )}
+                  </div>
+
+                  {/* Status */}
+                  <div className="col-span-2">
+                    <span
+                      className={`inline-flex px-2.5 py-1 rounded-lg text-xs font-medium capitalize ${statusClass(
+                        source.status
+                      )}`}
+                    >
+                      {
+                        source.status
+                      }
+                    </span>
+                  </div>
+
+                  {/* Action */}
+                  <div className="col-span-1 flex justify-end">
+                    <button
+                      disabled={
+                        busy
+                      }
+                      onClick={() =>
+                        handleRun(
+                          source
+                        )
+                      }
+                      className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-slate-600 disabled:opacity-50"
+                    >
+                      {busy ? (
+                        <Loader2
+                          size={
+                            16
+                          }
+                          className="animate-spin"
+                        />
+                      ) : source.enabled ? (
+                        <Play
+                          size={
+                            16
+                          }
+                        />
+                      ) : (
+                        <Pause
+                          size={
+                            16
+                          }
+                        />
+                      )}
+                    </button>
+                  </div>
+                </div>
+              );
+            }
+          )}
+        </div>
+
+        {/* Footer */}
+        <button className="mt-4 text-sm text-blue-600 font-medium inline-flex items-center gap-1 hover:text-blue-700">
+          View all sources
+          <ChevronRight size={16} />
+        </button>
       </div>
     </div>
   );

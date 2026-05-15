@@ -9,7 +9,11 @@ import Spinner from '@/pages/spinner/Spinner';
 
 // ===========================|| LOADABLE - LAZY LOADING ||=========================== //
 
-const Loadable = (Component: any) => (props: any) =>
+const Loadable =
+  <P extends object>(
+    Component: React.ComponentType<P>
+  ) =>
+  (props: P) =>
   (
     <Suspense fallback={<Spinner />}>
       <Component {...props} />

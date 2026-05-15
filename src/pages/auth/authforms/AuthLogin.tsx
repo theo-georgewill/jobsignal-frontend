@@ -1,6 +1,7 @@
 // src/views/auth/authforms/AuthLogin.tsx
 
 import { useState } from 'react';
+import axios from 'axios';
 import {
   Button,
   Checkbox,
@@ -54,12 +55,18 @@ const AuthLogin = () => {
       loginStore(data.access_token, data.user);
 
       navigate('/');
-    } catch (err: any) {
-      setError(
-        err?.response?.data?.message ||
-          err?.message ||
-          'Login failed'
-      );
+    }  catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        setError(
+          err.response?.data?.message ||
+          err.message ||
+          'Request failed'
+        );
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong');
+      }
     } finally {
       setLoading(false);
     }

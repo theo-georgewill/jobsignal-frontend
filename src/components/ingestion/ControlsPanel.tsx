@@ -34,7 +34,7 @@ export default function ControlsPanel({
 
   const runAction = async (
     key: ActionType,
-    fn: () => Promise<any>
+    fn: () => Promise<unknown>
   ) => {
     try {
       setLoadingAction(key);
