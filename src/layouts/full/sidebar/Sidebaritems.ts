@@ -1,22 +1,21 @@
 export interface ChildItem {
   id?: number | string;
   name?: string;
-  icon?: any;
+  icon?: string;
   children?: ChildItem[];
-  item?: any;
-  url?: any;
+  url?: string;
   color?: string;
 }
 
 export interface MenuItem {
   heading?: string;
   name?: string;
-  icon?: any;
-  id?: number;
+  icon?: string;
+  id?: number | string;
   to?: string;
   items?: MenuItem[];
   children?: ChildItem[];
-  url?: any;
+  url?: string;
 }
 
 import { uniqueId } from "lodash";
@@ -37,34 +36,52 @@ const SidebarContent: MenuItem[] = [
         id: uniqueId(),
         url: "/jobs",
       },
+      {
+        name: "Applications",
+        icon: "solar:widget-add-line-duotone",
+        id: uniqueId(),
+        url: "/applications",
+      },
+      {
+        name: "Opportunities",
+        icon: "solar:widget-add-line-duotone",
+        id: uniqueId(),
+        url: "/opportunities",
+      },
     ],
   },
   {
     heading: "ADMIN",
     children: [
       {
+        name: "Ingestion Engine",
+        icon: "solar:text-circle-outline",
+        id: uniqueId(),
+        url: "/admin/ingestion",
+      },
+      {
         name: "Sources",
         icon: "solar:text-circle-outline",
         id: uniqueId(),
-        url: "/ui/typography",
+        url: "/admin/ingestion/sources",
       },
       {
-        name: "Table",
-        icon: "solar:bedside-table-3-linear",
+        name: "Companies",
+        icon: "solar:text-circle-outline",
         id: uniqueId(),
-        url: "/ui/table",
+        url: "/admin/companies",
       },
       {
-        name: "Form",
-        icon: "solar:password-minimalistic-outline",
+        name: "Ingestion History",
+        icon: "solar:text-circle-outline",
         id: uniqueId(),
-        url: "/ui/form",
+        url: "/admin/ingestion/history",
       },
       {
-        name: "Shadow",
-        icon: "solar:airbuds-case-charge-outline",
+        name: "Error Logs",
+        icon: "solar:text-circle-outline",
         id: uniqueId(),
-        url: "/ui/shadow",
+        url: "/admin/ingestion/logs",
       },
     ],
   },

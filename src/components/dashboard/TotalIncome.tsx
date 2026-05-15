@@ -1,10 +1,10 @@
-
 import Chart from "react-apexcharts";
 import { Icon } from "@iconify/react";
 import { Badge } from "flowbite-react";
 
 const TotalIncome = () => {
-
+  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ChartData: any = {
     series: [
       {

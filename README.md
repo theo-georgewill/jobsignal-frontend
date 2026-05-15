@@ -22,7 +22,7 @@ The frontend is designed as an independent service for clean separation from the
 * Vite
 * React Query / state management
 * UI component system
-* Tailwind CSS (if enabled in project)
+* Tailwind CSS 
 
 ## Key Features
 

@@ -5,9 +5,14 @@ import CardBox from "src/components/shared/CardBox";
 
 interface BreadCrumbType {
   subtitle?: string;
-  items?: any[];
+  items?: BreadcrumbItem[];
   title: string;
   children?: JSX.Element;
+}
+
+interface BreadcrumbItem {
+  title: string;
+  to?: string;
 }
 
 const BreadcrumbComp = ({ items, title }: BreadCrumbType) => {

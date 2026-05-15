@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import  { Suspense } from 'react';
-import Spinner from 'src/views/spinner/Spinner';
+import Spinner from '@/pages/spinner/Spinner';
 
 
 // project imports
@@ -9,7 +9,11 @@ import Spinner from 'src/views/spinner/Spinner';
 
 // ===========================|| LOADABLE - LAZY LOADING ||=========================== //
 
-const Loadable = (Component: any) => (props: any) =>
+const Loadable =
+  <P extends object>(
+    Component: React.ComponentType<P>
+  ) =>
+  (props: P) =>
   (
     <Suspense fallback={<Spinner />}>
       <Component {...props} />

@@ -1,21 +1,41 @@
-const BASE_URL = 'http://localhost:3000';
+import { apiClient } from './client';
+
+export type ApiJob = {
+  id: string;
+  title: string;
+  company:
+    | string
+    | {
+        name: string;
+      };
+  location: string;
+  url: string;
+  tags?: string[];
+};
+
+export type FetchJobsResponse = {
+  data: ApiJob[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+};
 
 export async function fetchJobs(params?: {
   search?: string;
   role?: string;
   page?: number;
-  limit?: number; 
-}) {
-  const query = new URLSearchParams();
+  limit?: number;
+}): Promise<FetchJobsResponse> {
+  const res =
+    await apiClient.get<FetchJobsResponse>(
+      '/jobs',
+      {
+        params,
+      }
+    );
 
-  if (params?.search) query.append('search', params.search);
-  if (params?.role) query.append('role', params.role);
-  if (params?.page) query.append("page", String(params.page));
-  if (params?.limit) query.append("limit", String(params.limit));
-
-  const res = await fetch(`${BASE_URL}/jobs?${query.toString()}`);
-
-  if (!res.ok) throw new Error('Failed to fetch jobs');
-
-  return res.json();
+  return res.data;
 }

@@ -4,9 +4,11 @@ type Job = {
   id: string;
   title: string;
   company: string;
+  companyLogo?: string | null;
   location?: string;
   url: string;
   tags?: string[];
+  description?: string;
 };
 
 type Props = {
