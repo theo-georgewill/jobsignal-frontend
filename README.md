@@ -89,3 +89,7 @@ Deliver the best private job intelligence dashboard for software engineers seeki
 ## Status
 
 Active development.
+
+## Author
+
+Theo Georgewill
