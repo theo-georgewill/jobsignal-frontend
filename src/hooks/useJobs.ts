@@ -1,15 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchJobs } from '../api/jobs';
-import type { ApiJob } from '../api/jobs';
 
-type Job = {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  url: string;
-  tags: string[];
-};
+import type { Job } from '../types/job';
+
 
 export function useJobs(search?: string, role?: string, page = 1 ) {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -27,19 +20,7 @@ export function useJobs(search?: string, role?: string, page = 1 ) {
 
     fetchJobs({ search, role, page })
       .then((res) => {
-        const normalizedJobs = res.data.map((job: ApiJob) => ({
-          id: job.id,
-          title: job.title,
-          company:
-            typeof job.company === 'string'
-              ? job.company
-              : job.company?.name || 'Unknown',
-          location: job.location,
-          url: job.url,
-          tags: job.tags || [],
-        }));
-
-        setJobs(normalizedJobs);
+        setJobs(res.data);
         setMeta(res.meta);
       })
       .finally(() => setLoading(false));
